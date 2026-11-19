@@ -11,8 +11,9 @@ API_URL = "https://commons.wikimedia.org/w/api.php"
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 FULL_SPHERE_RATIO = 2.0
 RATIO_TOLERANCE = 0.05
+MIN_WIDTH = 4000
 PANORAMA_WIDTH = 4096
-RESULTS_PER_TOPIC = 10
+RESULTS_PER_QUERY = 10
 HTML_TAG = re.compile(r"<[^>]+>")
 
 
@@ -21,11 +22,15 @@ def metadata_text(metadata: dict, key: str) -> str | None:
     return html.unescape(HTML_TAG.sub("", raw)).strip() if raw else None
 
 
+def fits_360_viewer(width: int, height: int) -> bool:
+    return width >= MIN_WIDTH and width / height >= FULL_SPHERE_RATIO - RATIO_TOLERANCE
+
+
 def to_record(page: dict, lesson: dict) -> dict | None:
     info = page["imageinfo"][0]
     metadata = info.get("extmetadata", {})
     license_name, author = metadata_text(metadata, "LicenseShortName"), metadata_text(metadata, "Artist")
-    if not (license_name and author):
+    if not (license_name and author and fits_360_viewer(info["width"], info["height"])):
         return None
     is_full_sphere = abs(info["width"] / info["height"] - FULL_SPHERE_RATIO) <= RATIO_TOLERANCE
     return {
@@ -52,8 +57,8 @@ def search_panoramas(client: httpx.Client, query: str) -> list[dict]:
             "format": "json",
             "generator": "search",
             "gsrnamespace": 6,
-            "gsrlimit": RESULTS_PER_TOPIC,
-            "gsrsearch": f'incategory:"360°_panoramas" {query}',
+            "gsrlimit": RESULTS_PER_QUERY,
+            "gsrsearch": query,
             "prop": "imageinfo",
             "iiprop": "url|size|extmetadata",
             "iiurlwidth": PANORAMA_WIDTH,
@@ -67,9 +72,10 @@ def search_panoramas(client: httpx.Client, query: str) -> list[dict]:
 def build_records(lessons: list[dict], search: Callable[[str], list[dict]]) -> list[dict]:
     records = {}
     for lesson in lessons:
-        for page in search(lesson["query"]):
-            if record := to_record(page, lesson):
-                records.setdefault(record["external_id"], record)
+        for query in lesson["queries"]:
+            for page in search(query):
+                if record := to_record(page, lesson):
+                    records.setdefault(record["external_id"], record)
     return list(records.values())
 
 
@@ -79,7 +85,7 @@ def main() -> None:
     with httpx.Client(headers={"User-Agent": user_agent}, timeout=30) as client:
         records = build_records(lessons, lambda query: search_panoramas(client, query))
     output = DATA_DIR / "excursions.json"
-    output.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")
+    output.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     print(f"saved {len(records)} excursions to {output}")
 
 

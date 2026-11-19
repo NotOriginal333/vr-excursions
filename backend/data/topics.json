@@ -1,7 +1,61 @@
 [
-  {"subject": "Географія", "grade": 6, "topic": "Вулкани", "query": "volcano"},
-  {"subject": "Історія", "grade": 6, "topic": "Стародавній Єгипет", "query": "Egypt pyramids"},
-  {"subject": "Природознавство", "grade": 5, "topic": "Марс", "query": "Mars"},
-  {"subject": "Біологія", "grade": 7, "topic": "Коралові рифи", "query": "coral reef"},
-  {"subject": "Географія", "grade": 8, "topic": "Українські Карпати", "query": "Carpathians"}
+  {
+    "subject": "Географія",
+    "grade": 6,
+    "topic": "Вулкани",
+    "queries": [
+      "incategory:\"360° panoramas\" summit crater -Mars -Jefferson",
+      "incategory:\"360° panoramas\" volcano crater -Mars",
+      "incategory:\"360° panoramas\" Teide",
+      "incategory:\"360° panoramas\" Leirhnjúkur -Commonist"
+    ]
+  },
+  {
+    "subject": "Історія",
+    "grade": 6,
+    "topic": "Стародавня Греція",
+    "queries": [
+      "incategory:\"360° panoramas\" incategory:\"Acropolis of Athens|Propylaea|Views of the archaeological site of Corinth\"",
+      "incategory:\"360° panoramas\" incategory:\"Theatre of Epidaurus\" intitle:restitched",
+      "incategory:\"360° panoramas\" incategory:\"Panoramics in Olympia\" -intitle:3"
+    ]
+  },
+  {
+    "subject": "Пізнаємо природу",
+    "grade": 5,
+    "topic": "Марс",
+    "queries": [
+      "incategory:\"360° panoramas of Mars\" -\"Arabia Terra\"",
+      "incategory:\"Self-portrait photos of the Curiosity rover\" fileh:>8000 filew:<20500 -Equirectangular",
+      "incategory:\"Panoramic photographs of Mars\" fileh:>6000 -Greeley -Annotated"
+    ]
+  },
+  {
+    "subject": "Біологія",
+    "grade": 7,
+    "topic": "Коралові рифи",
+    "queries": [
+      "incategory:\"360° panoramas\" coral reef SVII -intitle:banner"
+    ]
+  },
+  {
+    "subject": "Біологія",
+    "grade": 7,
+    "topic": "Ботанічний сад",
+    "queries": [
+      "incategory:\"360° panoramas\" incategory:\"Botanischer Garten Hof|Botanischer Garten (Linz)|Alter Botanischer Garten Zürich|Wright Park Arboretum\"",
+      "incategory:\"360° panoramas\" incategory:\"Botanical garden of Leipzig University\" (Teich OR Systematische)"
+    ]
+  },
+  {
+    "subject": "Географія",
+    "grade": 7,
+    "topic": "Альпи",
+    "queries": [
+      "incategory:\"360° panoramic photographs of South Tyrol - Landscape panoramas\" (Zinnen OR Geisler OR Similaun)",
+      "incategory:\"360° panoramas\" \"Spherical Panorama\" Zermatt",
+      "incategory:\"360° panoramas\" Alpy Miage",
+      "incategory:\"Spherical panoramics in Switzerland\" (Säntis OR Obersee)"
+    ]
+  }
 ]

@@ -2,10 +2,10 @@ import pytest
 
 from scripts.build_seed import build_records, to_record
 
-LESSON = {"subject": "Географія", "grade": 6, "topic": "Вулкани", "query": "volcano"}
+LESSON = {"subject": "Географія", "grade": 6, "topic": "Вулкани", "queries": ["volcano"]}
 
 
-def wikimedia_page(width=8000, height=4000, **metadata):
+def wikimedia_page(pageid=42, width=8000, height=4000, **metadata):
     values = {
         "LicenseShortName": "CC BY-SA 4.0",
         "LicenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
@@ -14,7 +14,7 @@ def wikimedia_page(width=8000, height=4000, **metadata):
         **metadata,
     }
     return {
-        "pageid": 42,
+        "pageid": pageid,
         "title": "File:Etna 360.jpg",
         "imageinfo": [
             {
@@ -53,12 +53,26 @@ def test_content_type_follows_2_to_1_ratio_with_tolerance(width, height, content
     assert to_record(wikimedia_page(width=width, height=height), LESSON)["content_type"] == content_type
 
 
+@pytest.mark.parametrize(
+    ("width", "height"),
+    [pytest.param(5000, 4000, id="narrower than 360 degrees"), pytest.param(3998, 1999, id="too blurry for VR")],
+)
+def test_file_unfit_for_360_viewing_is_skipped(width, height):
+    assert to_record(wikimedia_page(width=width, height=height), LESSON) is None
+
+
 @pytest.mark.parametrize("missing", ["LicenseShortName", "Artist"])
 def test_file_without_license_or_author_is_skipped(missing):
     assert to_record(wikimedia_page(**{missing: None}), LESSON) is None
 
 
 def test_file_found_for_several_topics_is_saved_once_under_the_first():
-    carpathians = {"subject": "Географія", "grade": 8, "topic": "Українські Карпати", "query": "Carpathians"}
+    carpathians = {"subject": "Географія", "grade": 8, "topic": "Українські Карпати", "queries": ["Hoverla"]}
     records = build_records([LESSON, carpathians], lambda query: [wikimedia_page()])
     assert [record["topic"] for record in records] == ["Вулкани"]
+
+
+def test_every_query_of_a_topic_is_searched():
+    lesson = {**LESSON, "queries": ["Etna", "Vesuvius"]}
+    found = {"Etna": [wikimedia_page(pageid=1)], "Vesuvius": [wikimedia_page(pageid=2)]}
+    assert [record["external_id"] for record in build_records([lesson], found.get)] == ["1", "2"]
