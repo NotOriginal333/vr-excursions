@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1f2937;
+}
+
+header,
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+header a {
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filters input {
+  flex: 1 1 240px;
+}
+
+.catalog {
+  list-style: none;
+  padding: 0;
+}
+
+.catalog li {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.catalog span,
+.attribution {
+  color: #6b7280;
+  font-size: 0.9em;
+}
+
+.pages {
+  display: flex;
+  justify-content: space-between;
+}
+
+.panorama {
+  width: 100%;
+  height: 480px;
+}

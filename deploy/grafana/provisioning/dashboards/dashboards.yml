@@ -1,0 +1,6 @@
+apiVersion: 1
+
+providers:
+  - name: vr-excursions
+    options:
+      path: /etc/grafana/dashboards

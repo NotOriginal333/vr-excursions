@@ -1,0 +1,7 @@
+[
+  {"subject": "Географія", "grade": 6, "topic": "Вулкани", "query": "volcano"},
+  {"subject": "Історія", "grade": 6, "topic": "Стародавній Єгипет", "query": "Egypt pyramids"},
+  {"subject": "Природознавство", "grade": 5, "topic": "Марс", "query": "Mars"},
+  {"subject": "Біологія", "grade": 7, "topic": "Коралові рифи", "query": "coral reef"},
+  {"subject": "Географія", "grade": 8, "topic": "Українські Карпати", "query": "Carpathians"}
+]
