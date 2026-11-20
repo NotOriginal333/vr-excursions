@@ -66,7 +66,7 @@ jobs:
           flavor: latest=false
           tags: |
             type=semver,pattern={{version}}
-            type=sha
+            type=sha,enable={{is_default_branch}}
             type=raw,value=latest,enable={{is_default_branch}}
       - uses: docker/build-push-action@v7
         with:
