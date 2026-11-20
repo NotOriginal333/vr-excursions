@@ -7,7 +7,7 @@
   "panels": [
     {
       "type": "timeseries",
-      "title": "Запити за секунду",
+      "title": "Requests per second",
       "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 },
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "targets": [
@@ -16,7 +16,7 @@
     },
     {
       "type": "timeseries",
-      "title": "Помилки 5xx за секунду",
+      "title": "5xx errors per second",
       "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 },
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "targets": [
@@ -25,7 +25,7 @@
     },
     {
       "type": "timeseries",
-      "title": "Час відповіді, 95-й перцентиль",
+      "title": "Response time, p95",
       "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 },
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": { "defaults": { "unit": "s" } },
