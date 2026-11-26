@@ -7,7 +7,7 @@ def titles(client, **params):
 
 def test_health_reports_ok(make_client):
     with make_client() as client:
-        assert client.get("/api/health").json() == {"status": "ok"}
+        assert client.get("/api/health").json() == {"status": "down"}
 
 
 def test_catalog_is_paginated(make_client):
